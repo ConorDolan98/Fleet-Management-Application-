@@ -1,12 +1,11 @@
 #pragma once
 #ifndef fleetdb
 #define fleetdb
-#endif // !fleetdb
 
 typedef struct
 {
 	char userName[30];
-	char passWord[30]
+	char passWord[30];
 }Login;
 
 typedef struct fleetMachineryDB
@@ -26,5 +25,6 @@ typedef struct fleetMachineryDB
 	char breakdowns[30];
 
 	struct fleetMachineryDB* next; //points at next node  - linked list
-	struct fleetMachineryDB* prev; //points at previous node  - double linked list
 }fleetMachineryDB;
+
+#endif // !fleetdb
