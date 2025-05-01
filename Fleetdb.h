@@ -22,9 +22,16 @@ typedef struct fleetMachineryDB
 	char ownerEmail[30];
 	char ownerPhone[30];
 	char machineType[30];
-	char breakdowns[30];
+	char breakdowns[50];
 
 	struct fleetMachineryDB* next; //points at next node  - linked list
 }fleetMachineryDB;
+
+// Function prototypes
+void addMachine(fleetMachineryDB** head);
+void displayAll(fleetMachineryDB* head);
+void displayMachineDetails(fleetMachineryDB* head);
+void updateMachine(fleetMachineryDB* head);
+
 
 #endif // !fleetdb

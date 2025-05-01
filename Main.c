@@ -27,12 +27,12 @@ void main() {
 		case 3:
 			//display machine details 
 			printf("You selected display machine details.\n\n");
-			displayMachineDetails();
+			displayMachineDetails(head);
 			break;
 		case 4:
 			//update machine 
 			printf("You selected update a machines details.\n\n");
-			updateMachine();
+			updateMachine(head);
 			break;
 		case 5:
 			//delete machine
@@ -62,7 +62,7 @@ void main() {
 }
 
 int menu() {
-	printf("------------------------------------\n");
+	printf("--------------------------------------------------\n");
 	printf("Welcome to Machinery Management Ltd. fleet manamgement system\n");
 	printf("Please enter the corresponding number:\n");
 	printf("1) Add machine \n");
@@ -74,7 +74,7 @@ int menu() {
 	printf("7) Print all machine details into a report file\n");
 	printf("8) List all the machinery in order of current valuation\n");
 	printf("-1) Exit\n");
-	printf("------------------------------------\n");
+	printf("--------------------------------------------------\n");
 	printf("Enter Choice: ");
 	scanf("%d", &userChoice);
 	printf("\n");
