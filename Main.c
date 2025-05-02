@@ -37,12 +37,12 @@ void main() {
 		case 5:
 			//delete machine
 			printf("You selected delete a machine.\n\n");
-			deleteMachine();
+			deleteMachine(&head);
 			break;
 		case 6:
 			//generate stats 
 			printf("You selected generate machine statistics.\n\n");
-			machineReport();
+			generateStats(head);
 			break;
 		case 7:
 			//print machine details to report

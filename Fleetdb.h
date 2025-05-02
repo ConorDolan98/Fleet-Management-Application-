@@ -32,6 +32,7 @@ void addMachine(fleetMachineryDB** head);
 void displayAll(fleetMachineryDB* head);
 void displayMachineDetails(fleetMachineryDB* head);
 void updateMachine(fleetMachineryDB* head);
-
+void deleteMachine(fleetMachineryDB** head);
+void generateStats(fleetMachineryDB* head);
 
 #endif // !fleetdb
