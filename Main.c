@@ -2,13 +2,15 @@
 #include <stdio.h> 
 #include "Fleetdb.h"
 
+#define LOGIN_FILE "login.txt"
+
 //Variables
 int userChoice=0;
 int menu();
 
 void main() {
 	fleetMachineryDB* head = NULL; //initalises head pointer to NULL
-
+	
 	//Menu
 	do {
 		menu();
@@ -46,6 +48,7 @@ void main() {
 			break;
 		case 7:
 			//print machine details to report
+			machineReport(head);
 			break;
 		case 8:
 			//order machines by value 
@@ -79,3 +82,4 @@ int menu() {
 	scanf("%d", &userChoice);
 	printf("\n");
 }
+

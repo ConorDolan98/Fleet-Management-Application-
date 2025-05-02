@@ -7,16 +7,6 @@
 void addMachine(fleetMachineryDB** head) {
 	//Variables
 	char chassisNum[30];
-	char machineMake[30];
-	char machineModel[30];
-	int year;
-	float cost;
-	float currValue;
-	int mileage;
-	int nextService;
-	char ownerName[30];
-	char ownerEmail[30];
-	char ownerPhone[30];
 	char machineType[30];
 	char breakdowns[30];
 	int typeChoice;
@@ -43,47 +33,36 @@ void addMachine(fleetMachineryDB** head) {
 	strcpy(newNode->chassisNum, chassisNum);
 	
 	printf("Please enter the machines make: \t\t");
-	scanf("%s", machineMake);
-	strcpy(newNode->machineMake, machineMake);
+	scanf("%s", newNode->machineMake);
 
 	printf("Please enter the machines model: \t\t");
-	scanf("%s", machineModel);
-	getchar(); // clears \n
-	strcpy(newNode->machineModel, machineModel);
+	scanf("%s", newNode->machineModel);
 
 	printf("Please enter the machines year: \t\t");
-	scanf("%d", &year);
-	newNode->year = year;
+	scanf("%d", &newNode->year);
 
 	printf("Please enter the machines cost: \t\t");
-	scanf("%f", &cost);
-	newNode->cost = cost;
+	scanf("%f", &newNode->cost);
 
 	printf("Please enter the machines current value: \t");
-	scanf("%f", &currValue);
-	newNode->currValue = currValue;
+	scanf("%f", &newNode->currValue);
 
 	printf("Please enter the machines mileage: \t\t");
-	scanf("%d", &mileage);
-	newNode->mileage = mileage;
+	scanf("%d", &newNode->mileage);
 
 	printf("Please enter the machines next service: \t");
-	scanf("%d", &nextService);
-	newNode->nextService = nextService;
+	scanf("%d", &newNode->nextService);
 
 	getchar();//clears \n
 
 	printf("Please enter the machines owner name: \t\t");
-	scanf("%s", ownerName);
-	strcpy(newNode->ownerName, ownerName);
+	scanf("%s", newNode->ownerName);
 
 	printf("Please enter the machines owner email: \t\t");
-	scanf("%s", ownerEmail);
-	strcpy(newNode->ownerEmail, ownerEmail);
+	scanf("%s", newNode->ownerEmail);
 
 	printf("Please enter the machines owner phone: \t\t");
-	scanf("%s", ownerPhone);
-	strcpy(newNode->ownerPhone, ownerPhone);
+	scanf("%s", newNode->ownerPhone);
 
 	do {
 		printf("Select the machine type : 1) Tractor 2) Excavator 3) Roller 4) Crane 5) Mixer\n");
@@ -363,6 +342,14 @@ void deleteMachine(fleetMachineryDB** head) {
 		temp = temp->next;
 	}
 
+	// Deletes the head node
+	if (prev == NULL)	{
+		*head = temp->next;
+	}
+	else {
+		prev->next = temp->next;//deleted the node after
+	}
+
 	if (temp == NULL) {
 		printf("Machine with chassis number %s not found.\n", searchChassis);
 		return;
@@ -381,102 +368,80 @@ void generateStats(fleetMachineryDB* head) {
 	}
 
 	//Variables
+	char diffMachines[5][30] = { "Tractor", "Excavator", "Roller", "Crane", "Mixer" };
+	char breakdownEvents[4][50] = { "Never", "Less than three times", "Less than five times", "More than five times" };
+	int machineStats[5][4] = { 0 }; //Initliased at 0
+	int total[5] = { 0 };
 	int machineTypeArrayIndex = -1, breakdownArrayIndex = -1;
-	//Initialising arrays
-	int stats[5][4] = { 0 };
-	int typeTotals[5] = { 0 };
 	float percent;
 
-	// Fill the stats matrix
 	fleetMachineryDB* temp = head;
+
 	while (temp != NULL) {
-
-		// Machine Type Index
-		if (strcmp(temp->machineType, "Tractor") == 0) {
-			machineTypeArrayIndex = 0;
-		}
-		else if (strcmp(temp->machineType, "Excavator") == 0) {
-			machineTypeArrayIndex = 1;
-		}
-		else if (strcmp(temp->machineType, "Roller") == 0) {
-			machineTypeArrayIndex = 2;
-		}
-		else if (strcmp(temp->machineType, "Crane") == 0) {
-			machineTypeArrayIndex = 3;
-		}
-		else if (strcmp(temp->machineType, "Mixer") == 0) {
-			machineTypeArrayIndex = 4;
+		
+		//loop finds machine type
+		for (int i = 0; i < 5; i++) {
+			if (strcmp(temp->machineType, diffMachines[i]) == 0) {
+				machineTypeArrayIndex = i;
+				break;
+			}
 		}
 
-		// Breakdown Index
-		if (strcmp(temp->breakdowns, "Never") == 0) {
-			breakdownArrayIndex = 0;
-		}
-		else if (strcmp(temp->breakdowns, "Less than three times") == 0) {
-			breakdownArrayIndex = 1;
-		}
-		else if (strcmp(temp->breakdowns, "Less than five times") == 0) {
-			breakdownArrayIndex = 2;
-		}
-		else if (strcmp(temp->breakdowns, "More than five times") == 0) {
-			breakdownArrayIndex = 3;
+		//loop finds breakdown type
+		for (int i = 0; i < 4; i++) {
+			if (strcmp(temp->breakdowns, breakdownEvents[i]) == 0) {
+				breakdownArrayIndex = i;
+				break;
+			}
 		}
 
+		//increments if both machine type and breakdown type is found
 		if (machineTypeArrayIndex != -1 && breakdownArrayIndex != -1) {
-			stats[machineTypeArrayIndex][breakdownArrayIndex]++;
-			typeTotals[machineTypeArrayIndex]++;
+			machineStats[machineTypeArrayIndex][breakdownArrayIndex]++;
+			total[machineTypeArrayIndex]++;
 		}
-
 		temp = temp->next;
 	}
 
-	// Print results
-	// Outer loop prints machine type
-	for (int type = 0; type < 5; type++) {
-		if (typeTotals[type] = 0) {
-
-			// Print machine type label
-			switch (type) {
-			case 0:
-				printf("\nMachine Type: Tractor\n");
-				break;
-			case 1:
-				printf("\nMachine Type: Excavator\n");
-				break;
-			case 2:
-				printf("\nMachine Type: Roller\n");
-				break;
-			case 3:
-				printf("\nMachine Type: Crane\n");
-				break;
-			case 4:
-				printf("\nMachine Type: Mixer\n");
-				break;
+	//Prints out the statistics
+	printf("-------------------Machine Stats------------------\n");
+	for (int i = 0; i < 5; i++) {
+		printf("Machine Type: %s\n", diffMachines[i]);
+		for (int j = 0; j < 4; j++) {
+			if (total[i] != 0) {
+				percent = ((float)machineStats[i][j] / total[i]) * 100;
 			}
-		}
-		
-		//inner loop prints %
-		for (int breakdowns = 0; breakdowns < 4; breakdowns++) {
-			percent = (stats[type][breakdowns] * 100.0f) / typeTotals[type];
-
-			switch (breakdowns) {
-			case 0: 
-				printf("  Never:\t\t\t%.2f%%\n", percent);//to output a percentage extra %% is required at end
-				break;
-			case 1: 
-				printf("  Less than three times:\t%.2f%%\n", percent); 
-				break;
-			case 2: 
-				printf("  Less than five times:\t\t%.2f%%\n", percent); 
-				break;
-			case 3: 
-				printf("  More than five times:\t\t%.2f%%\n", percent); 
-				break;
+			else {
+				percent = 0;
 			}
+			printf("Breakdown Type: %s - Count: %d - Percentage: %.2f%%\n", breakdownEvents[j], machineStats[i][j], percent);
 		}
+		printf("--------------------------------------------------\n");
 	}
+
 }
 
-void machineReport() {
+void machineReport(fleetMachineryDB* head) {
+	FILE* file = fopen("fleet.txt", "w");
+
+	if (file == NULL) {
+		printf("Error opening file.\n");
+		return;
+	}
+	if (head == NULL) {
+		fprintf(file, "No machines in database\n");
+	}
+	else {
+		fleetMachineryDB* temp = head;
+		while (temp != NULL) {
+			fprintf("%s %s %s %d %.2f %.2f %d %d %d %s %s %s %s %s\n", 
+				temp->chassisNum, temp->machineMake, temp->machineModel, 
+				temp-> year, temp->cost, temp->currValue,
+				temp->mileage, temp->nextService, temp->ownerName, temp->ownerEmail,
+				temp->ownerPhone, temp->machineType , temp->breakdowns);
+			temp = temp->next;
+		}
+	}
+	fclose(file);
 
 }

@@ -4,8 +4,8 @@
 
 typedef struct
 {
-	char userName[30];
-	char passWord[30];
+	char userName[10];
+	char passWord[10];
 }Login;
 
 typedef struct fleetMachineryDB
@@ -34,5 +34,6 @@ void displayMachineDetails(fleetMachineryDB* head);
 void updateMachine(fleetMachineryDB* head);
 void deleteMachine(fleetMachineryDB** head);
 void generateStats(fleetMachineryDB* head);
+void machineReport(fleetMachineryDB* head);
 
 #endif // !fleetdb
