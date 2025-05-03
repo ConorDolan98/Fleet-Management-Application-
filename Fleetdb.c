@@ -58,8 +58,20 @@ void addMachine(fleetMachineryDB** head) {
 	printf("Please enter the machines owner name: \t\t");
 	scanf("%s", newNode->ownerName);
 
-	printf("Please enter the machines owner email: \t\t");
-	scanf("%s", newNode->ownerEmail);
+	//Checks if email contains @ and ends with .com
+	//strchr finds the posititon of a char
+	do {
+		printf("Please enter the machine's owner email: \t");
+		scanf("%s", newNode->ownerEmail);
+
+		if (strchr(newNode->ownerEmail, '@') == NULL ||
+			strcmp(&newNode->ownerEmail[strlen(newNode->ownerEmail) - 4], ".com") != 0) {
+			printf("Invalid email. Must contain '@' and end with '.com'\n");
+		}
+
+	} while (strchr(newNode->ownerEmail, '@') == NULL ||
+		strcmp(&newNode->ownerEmail[strlen(newNode->ownerEmail) - 4], ".com") != 0);
+
 
 	printf("Please enter the machines owner phone: \t\t");
 	scanf("%s", newNode->ownerPhone);
@@ -220,7 +232,7 @@ void updateMachine(fleetMachineryDB* head) {
 	int breakdownChoice;
 
 	if (head == NULL) {
-		printf("No machines in the database.");
+		printf("No machines in the database.\n");
 		return;
 	}
 	else {
@@ -258,8 +270,18 @@ void updateMachine(fleetMachineryDB* head) {
 				printf("Enter the machines owner name: \t\t");
 				scanf("%s", temp->ownerName);
 
-				printf("Enter the machines owner email: \t");
-				scanf("%s", temp->ownerEmail);
+				do {
+					printf("Please enter the machine's owner email: \t");
+					scanf("%s", temp->ownerEmail);
+
+					if (strchr(temp->ownerEmail, '@') == NULL ||
+						strcmp(&temp->ownerEmail[strlen(temp->ownerEmail) - 4], ".com") != 0) {
+						printf("Invalid email. Must contain '@' and end with '.com'\n");
+					}
+
+				} while (strchr(temp->ownerEmail, '@') == NULL ||
+					strcmp(&temp->ownerEmail[strlen(temp->ownerEmail) - 4], ".com") != 0);
+
 
 				printf("Enter the machines owner phone: \t");
 				scanf("%s", temp->ownerPhone);
@@ -434,14 +456,50 @@ void machineReport(fleetMachineryDB* head) {
 	else {
 		fleetMachineryDB* temp = head;
 		while (temp != NULL) {
-			fprintf("%s %s %s %d %.2f %.2f %d %d %d %s %s %s %s %s\n", 
-				temp->chassisNum, temp->machineMake, temp->machineModel, 
-				temp-> year, temp->cost, temp->currValue,
-				temp->mileage, temp->nextService, temp->ownerName, temp->ownerEmail,
-				temp->ownerPhone, temp->machineType , temp->breakdowns);
+			fprintf(file, "%s %s %s %d %.2f %.2f %d %d %s %s %s %s %s\n",
+				temp->chassisNum, temp->machineMake, temp->machineModel,
+				temp->year, temp->cost, temp->currValue,
+				temp->mileage, temp->nextService,
+				temp->ownerName, temp->ownerEmail,
+				temp->ownerPhone, temp->machineType, temp->breakdowns);
 			temp = temp->next;
 		}
 	}
 	fclose(file);
+}
 
+void readFromFile(fleetMachineryDB** head) {
+	FILE* file = fopen("fleet.txt", "r");
+	if (!file) {
+		printf("No existing fleet data found.\n");
+		return;
+	}
+
+	fleetMachineryDB temp;
+	while (fscanf(file, "%s %s %s %d %f %f %d %d %s %s %s %s %s",
+		temp.chassisNum, temp.machineMake, temp.machineModel,
+		&temp.year, &temp.cost, &temp.currValue, &temp.mileage,
+		&temp.nextService, temp.ownerName, temp.ownerEmail,
+		temp.ownerPhone, temp.machineType, temp.breakdowns) == 13)
+	{
+		// Allocate memory for a new node
+		fleetMachineryDB* newNode = malloc(sizeof(fleetMachineryDB));
+		*newNode = temp;  // Copy all fields
+		newNode->next = NULL;
+
+		// Insert at end of list
+		if (*head == NULL) {
+			*head = newNode;
+		}
+		else {
+			fleetMachineryDB* last = *head;
+			while (last->next != NULL) {
+				last = last->next;
+			}
+			last->next = newNode;
+		}
+	}
+
+	fclose(file);
+	printf("Fleet data loaded from fleet.txt\n");
 }

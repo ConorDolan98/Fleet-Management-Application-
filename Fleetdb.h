@@ -35,5 +35,6 @@ void updateMachine(fleetMachineryDB* head);
 void deleteMachine(fleetMachineryDB** head);
 void generateStats(fleetMachineryDB* head);
 void machineReport(fleetMachineryDB* head);
+void readFromFile(fleetMachineryDB** head);
 
 #endif // !fleetdb

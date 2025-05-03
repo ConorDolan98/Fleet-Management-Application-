@@ -1,9 +1,2 @@
 ﻿  Fleetdb.c
-C:\Users\dolan\OneDrive - Atlantic TU\Y2 SD\Semester 2\APP\Assignment\FleetManagementApplication\FleetManagementApplication\Fleetdb.c(437,12): warning C4133: 'function': incompatible types - from 'char [47]' to 'FILE *const '
-  Main.c
-C:\Users\dolan\OneDrive - Atlantic TU\Y2 SD\Semester 2\APP\Assignment\FleetManagementApplication\FleetManagementApplication\Main.c(14,2): warning C4013: 'login' undefined; assuming extern returning int
-C:\Users\dolan\OneDrive - Atlantic TU\Y2 SD\Semester 2\APP\Assignment\FleetManagementApplication\FleetManagementApplication\Main.c(66,2): warning C4098: 'main': 'void' function returning a value
-C:\Users\dolan\OneDrive - Atlantic TU\Y2 SD\Semester 2\APP\Assignment\FleetManagementApplication\FleetManagementApplication\Main.c(100,10): warning C4013: 'strcmp' undefined; assuming extern returning int
-  Generating Code...
-C:\Users\dolan\OneDrive - Atlantic TU\Y2 SD\Semester 2\APP\Assignment\FleetManagementApplication\FleetManagementApplication\Main.c(86,1): warning C4716: 'menu': must return a value
   FleetManagementApplication.vcxproj -> C:\Users\dolan\OneDrive - Atlantic TU\Y2 SD\Semester 2\APP\Assignment\FleetManagementApplication\x64\Debug\FleetManagementApplication.exe
