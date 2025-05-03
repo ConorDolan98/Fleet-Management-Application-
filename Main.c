@@ -71,7 +71,9 @@ void main() {
 			break;
 		case -1:
 			//exit program
-			printf("Exiting the program...\n");
+			printf("Saving on exit...\n");
+			machineReport(head);
+
 			break;
 		default:
 			printf("Invalid choice please try again.\n");
